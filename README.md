@@ -12,12 +12,14 @@ and you are obligated to mention the author if you use them!!!:<br />
 
 The Transformer Architecture is color-coded by layers, the arrows show data pathways through encoder and decoder blocks:
 <br />
+<br />
 <p align="center">
   <img src="images/TransformerArhitecture.png">
 </p>
 
 <br />
 Firstly the input to the encoder and decoder (in my case of translation) needs to be tokenized, so, for example, let's say you have a list of strings, we use a tokenizer such as Word tokenizer that splits the string by words, we create a vocabulary from all the words we have and then assign the numbers to each word, we also put the [SOS] (start of a sentence) token that will be put at the start of each sentence and [EOS] (end of the sentence) token put at the end of a sentence, we also define a maximum sequence length (usually the largest sentence plus some range) and we put [PAD] tokens to pad up if sentence shorter than the max sequence length. As shown in the next image.
+<br />
 <br />
 <p align="center">
   <img src="images/1.png" width="80%" height="auto"/>
@@ -26,15 +28,17 @@ Firstly the input to the encoder and decoder (in my case of translation) needs t
 <br />
 Now we concatenate the tokenized sentences (as shown by colors) into a 2d tensor of batches:
 <br />
+<br />
 <p align="center">
-  <img src="images/2.png">
+  <img src="images/2.png" width="80%" height="auto"/>
 </p>
 
 <br />
-That is how the input to the encoder and decoder looks like, now we will,based on the embedd size of the model, project from vocabulary size into our model size, firstly we will perform the embedding of data and in the case of sentences positional encoding, this projection is what we are learning as indicted that all these tensors, in the end, represent weights, color coding show how the input data is mapped to each weight position in the tensor (simple linear algebra matrix operations):
+That is how the input to the encoder and decoder looks like, now we will, based on the embedd size of the model, a project from vocabulary size into our model size, firstly we will perform the embedding of data and in the case of sentences positional encoding, this projection is what we are learning as indicted that all these tensors, in the end, represent weights, color coding show how the input data is mapped to each weight position in the tensor (simple linear algebra matrix operations):
+<br />
 <br />
 <p align="center">
-  <img src="images/3.png">
+  <img src="images/3.png" width="80%" height="auto"/>
 </p>
 
 <br />
@@ -42,43 +46,47 @@ Now comes the main part of the transformer, mainly the attention mechanism, for 
 <br />
 <br />
 <p align="center">
-  <img src="images/4.png">
+  <img src="images/4.png" width="80%" height="auto"/>
 </p>
 
 <br />
 We can start calculating the attention, firstly we matrix multiply the queries and keys, this is the same for the encoder and decoder:
 <br />
+<br />
 <p align="center">
-  <img src="images/5.png">
+  <img src="images/5.png" width="80%" height="auto"/>
 </p>
 
 <br />
 Now based on the encoder or decoder we apply the masks which are also just a tensor that will block out a piece of data, firstly for the encoder as shown we block the positions that correspond to [PAD] tokens, we do this by setting them to zero when creating a mask and then for every zero we give it a float('-inf') as when using softmax this will tend to zero:
 <br />
+<br />
 <p align="center">
-  <img src="images/6.png">
+  <img src="images/6.png" width="80%" height="auto"/>
 </p>
 
 <br />
 Finally, for the encoder, the calculated attention is softmax of proton-attention (divided by the square root of head embedd size) and matrix multiplied by the value tensor. Then we just concatenate (merge) data from each Head back into the starting tensor shape, you can look at this like we asked each Head for something and then took each answer:
 <br />
+<br />
 <p align="center">
-  <img src="images/7.png">
+  <img src="images/7.png" width="80%" height="auto"/>
 </p>
 
 <br />
-For the decoder's attention, we do the same but here we add one more mask (in my case). These masks are something that you can play with and distribute different masks at different stages, but for now, the first mask is the same maks as in the encoder ([PAD] mask) and the second mask is so so-called look-ahead mask that for each token in sentence if you have a sentence of five words that are tokenized, for the first token (first word) we make it such that this word can only see itself, next word sees itself and the word before, etc. this is represented by the lower triangular mask, where the upper right of diagonal part are zeros that we put into float('-inf'):
+For the decoder's attention, we do the same but here we add one more mask (in my case). These masks are something that you can play with and distribute different masks at different stages, but for now, the first mask is the same maks as in the encoder ([PAD] mask) and the second mask is so so-called look-ahead mask for each token in sentence if you have a sentence of five words that are tokenized, for the first token (first word) we make it such that this word can only see itself, next word sees itself and the word before, etc. this is represented by the lower triangular mask, where the upper right of diagonal part are zeros that we put into float('-inf'):
 <br />
 <br />
 <p align="center">
-  <img src="images/8.png">
+  <img src="images/8.png" width="80%" height="auto"/>
 </p>
 
 <br />
 Final attention is calculated the same:
 <br />
+<br />
 <p align="center">
-  <img src="images/9.png">
+  <img src="images/9.png" width="80%" height="auto"/>
 </p>
 
 
