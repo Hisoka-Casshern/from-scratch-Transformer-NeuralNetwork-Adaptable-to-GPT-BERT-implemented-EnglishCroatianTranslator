@@ -12,7 +12,7 @@ Here I will shortly through images that show the workings of the transformer net
 The Transformer Architecture is color-coded by layers:
 <br />
 <p align="center">
-  <img src="GameScreenshots/0.png" width="300" height="400">
+  <img src="images/TransformerArhitecture.png">
 </p>
 
 
