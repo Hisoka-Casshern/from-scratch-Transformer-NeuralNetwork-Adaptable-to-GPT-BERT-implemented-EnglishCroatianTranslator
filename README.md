@@ -7,7 +7,8 @@ The modelData directory contains .json tokenization for the English and Croatian
 
 
 <br />
-Here I will shortly through images that show the workings of the transformer network and explain the process of the Transformer using the said images, The images are all made by myself and are under a license that allows usage only for noncommercial and educational purposes:<br />
+Here I will shortly through images that show the workings of the transformer network and explain the process of the Transformer using the said images, The images are all made by myself and are under a license that allows usage only for noncommercial and educational purposes,
+and you are obligated to mention the author if you use them!!!:<br />
 
 The Transformer Architecture is color-coded by layers, the arrows show data pathways through encoder and decoder blocks:
 <br />
