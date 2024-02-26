@@ -20,7 +20,7 @@ The Transformer Architecture is color-coded by layers, the arrows show data path
 Firstly the input to the encoder and decoder (in my case of translation) needs to be tokenized, so, for example, let's say you have a list of strings, we use a tokenizer such as Word tokenizer that splits the string by words, we create a vocabulary from all the words we have and then assign the numbers to each word, we also put the [SOS] (start of a sentence) token that will be put at the start of each sentence and [EOS] (end of the sentence) token put at the end of a sentence, we also define a maximum sequence length (usually the largest sentence plus some range) and we put [PAD] tokens to pad up if sentence shorter than the max sequence length. As shown in the next image.
 <br />
 <p align="center">
-  <img src="images/1.png">
+  <img src="images/1.png" width="50%" height="auto"/>
 </p>
 
 <br />
